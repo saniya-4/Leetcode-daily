@@ -1,0 +1,48 @@
+class Solution {
+    public static int find(String s,String first,String second,int x,int y)
+    {
+        Stack<Character>st=new Stack<>();
+        Stack<Character>newst=new Stack<>();
+        int totalgain=0;
+        for(char c:s.toCharArray())
+        {
+            if(!st.isEmpty() && st.peek()==first.charAt(0) && c==second.charAt(0))
+            {
+                st.pop();
+                totalgain+=x;
+
+                
+            }
+            else
+            {
+                st.push(c);
+            }
+        }
+    while(!st.isEmpty())
+    {
+        char c=st.pop();
+        if(!newst.empty() && c==second.charAt(0) && newst.peek()==first.charAt(0))
+        {
+            newst.pop();
+            totalgain+=y;
+        }
+        else
+        {
+            newst.push(c);
+        }
+    
+    }
+    return totalgain;
+    }
+    public int maximumGain(String s, int x, int y) {
+        
+        if(x>=y)
+        {
+            return find(s,"a","b",x,y);
+        }
+        else
+        {
+            return find(s,"b","a",y,x);
+        }
+    }
+}
