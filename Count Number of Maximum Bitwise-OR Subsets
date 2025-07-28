@@ -1,0 +1,35 @@
+class Solution {
+    int count=0;
+    int max=0;
+    public void ways(int index,int n,int []nums,List<Integer>ans)
+    {
+        if(index==n)
+        {
+            int bit=0;
+            for(int ele:ans)
+            {
+                bit=bit|ele;
+            }
+            if(bit==max)
+            {
+                count++;
+            }
+            else if(bit>max)
+            {
+                max=bit;
+                count=1;
+            }
+            return ;
+        }
+        ans.add(nums[index]);
+        ways(index+1,n,nums,ans);
+        ans.remove(ans.size()-1);
+        ways(index+1,n,nums,ans);
+    }
+    public int countMaxOrSubsets(int[] nums) {
+        int n=nums.length;
+        List<Integer>ans=new ArrayList<>();
+        ways(0,n,nums,ans);
+        return count;
+    }
+}
