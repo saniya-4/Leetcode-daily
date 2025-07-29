@@ -1,0 +1,28 @@
+class Solution {
+    public int[][] mergeArrays(int[][] nums1, int[][] nums2) {
+        TreeMap<Integer,Integer>mpp=new TreeMap<>();
+        for(int []n:nums1)
+        {
+            int id=n[0];
+            int val=n[1];
+            mpp.put(id,val);
+
+        }
+        for(int []n:nums2)
+        {
+            int id=n[0];
+            int val=n[1];
+            mpp.put(id,mpp.getOrDefault(id,0)+val);
+        }
+        int [][]res=new int[mpp.size()][2];
+        int i=0;
+        for(Map.Entry<Integer,Integer>entry:mpp.entrySet())
+        {
+            res[i][0]=entry.getKey();
+            res[i][1]=entry.getValue();
+            i++;
+
+        }
+        return res;
+    }
+}
