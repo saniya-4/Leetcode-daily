@@ -1,0 +1,69 @@
+class Solution {
+    public static void build(int index,int low,int high,int []baskets,int []seg)
+    {
+        if(low==high)
+        {
+            seg[index]=baskets[low];
+            return ;
+        }
+        int mid=low+(high-low)/2;
+        build(2*index+1,low,mid,baskets,seg);
+        build(2*index+2,mid+1,high,baskets,seg);
+        seg[index]=Math.max(seg[2*index+1],seg[2*index+2]);
+    }
+    public static int leftmost(int index,int low,int high,int val,int []seg)
+    {
+        if(seg[index]<val)
+        {
+            return -1;
+        }
+        if(low==high)
+        {
+            return low;
+        }
+        int mid=low+(high-low)/2;
+        int left=leftmost(2*index+1,low,mid,val,seg);
+        if(left!=-1)
+        {
+            return left;
+        }
+        return leftmost(2*index+2,mid+1,high,val,seg);
+    }
+    public void update(int index,int low,int high,int indexcheck,int []seg)
+    {
+        if(low==high)
+        {
+            seg[index]=-1;
+            return;
+        }
+        int mid=low+(high-low)/2;
+        if(indexcheck<=mid)
+        {
+            update(2*index+1,low,mid,indexcheck,seg);
+        }
+        else
+        {
+            update(2*index+2,mid+1,high,indexcheck,seg);
+        }
+        seg[index]=Math.max(seg[2*index+1],seg[2*index+2]);
+    }
+    public int numOfUnplacedFruits(int[] fruits, int[] baskets) {
+        int n=baskets.length;
+        int []segment=new int[4*n];
+        build(0,0,n-1,baskets,segment);
+        int up=0;
+        for(int f:fruits)
+        {
+            int index=leftmost(0,0,n-1,f,segment);
+            if(index==-1)
+            {
+                up++;
+            }
+            else
+            {
+                update(0,0,n-1,index,segment);
+            }
+        }
+        return up;
+    }
+}
