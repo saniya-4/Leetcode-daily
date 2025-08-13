@@ -1,0 +1,16 @@
+class Solution {
+
+    public int maxProfit(int[] prices, int fee) {
+        int n=prices.length;
+        int curbuy=0,cursell=0;
+        int aheadbuy=0,aheadsell=0;
+        for(int i=n-1;i>=0;i--)
+        {
+            curbuy=Math.max(-prices[i]+aheadsell,0+aheadbuy);
+            cursell=Math.max(prices[i]-fee+aheadbuy,0+aheadsell);
+            aheadbuy=curbuy;
+            aheadsell=cursell;
+        }
+        return aheadbuy;
+    }
+}
