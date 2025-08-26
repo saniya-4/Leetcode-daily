@@ -1,0 +1,95 @@
+class Node{
+    Node []links=new Node[26];
+    boolean flag=false;
+    public boolean containsKey(int index)
+    {
+        return links[index]!=null;
+    }
+    public void setEnd()
+    {
+        flag=true;
+    }
+    public void put(int index,Node node)
+    {
+         links[index]=node;
+    }
+    public Node get(int index)
+    {
+        return links[index];
+    }
+    public boolean isEnd()
+    {
+        return flag;
+    }
+    public int children()
+    {
+        int count=0;
+        for(int i=0;i<26;i++)
+        {
+            if(links[i]!=null)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int getChildrenindex()
+    {
+        for(int i=0;i<26;i++)
+        {
+            if(links[i]!=null)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+class Trie{
+    Node root;
+    Trie()
+    {
+        root=new Node();
+    
+    }
+    public void insert(String s)
+    {
+        Node node=root;
+        for(int i=0;i<s.length();i++)
+        {
+            int index=s.charAt(i)-'a';
+            if(!node.containsKey(index))
+            {
+                node.put(index,new Node());
+            }
+            node=node.get(index);
+        }
+        node.setEnd();
+    }
+    public String getString()
+    {
+        Node node=root;
+        StringBuilder prefix=new StringBuilder();
+        while(node.children()==1 && !node.isEnd())
+        {
+            int index=node.getChildrenindex();
+            prefix.append((char)(index+'a'));
+            node=node.get(index);
+        }
+        return prefix.toString();
+
+    }
+}
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        Trie t=new Trie();
+        
+            for(int i=0;i<strs.length;i++)
+            {
+                t.insert(strs[i]);
+
+            }
+            return t.getString();
+        
+    }
+}
