@@ -1,0 +1,37 @@
+class Solution {
+    public void ways(int index,String digits,List<String>res,Map<Character,String>mpp,StringBuilder ans)
+    {
+        if(index==digits.length())
+        {
+            res.add(ans.toString());
+            return;
+
+        }
+        String letters=mpp.get(digits.charAt(index));
+        for(char ch:letters.toCharArray())
+        {
+            ans.append(ch);
+            ways(index+1,digits,res,mpp,ans);
+            ans.deleteCharAt(ans.length()-1);
+        }
+    }
+    public List<String> letterCombinations(String digits) {
+        List<String>res=new ArrayList<>();
+        if(digits==null || digits.length()==0)
+        {
+            return res;
+        }
+        Map<Character,String>mpp=new HashMap<>();
+        mpp.put('2',"abc");
+        mpp.put('3',"def");
+        mpp.put('4',"ghi");
+        mpp.put('5',"jkl");
+        mpp.put('6',"mno");
+        mpp.put('7',"pqrs");
+        mpp.put('8',"tuv");
+        mpp.put('9',"wxyz");
+        StringBuilder ans=new StringBuilder();
+        ways(0,digits,res,mpp,ans);
+        return res;
+    }
+}
