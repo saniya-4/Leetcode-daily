@@ -1,0 +1,24 @@
+class Solution {
+    public static void insert(Stack<Integer>st,int top)
+    {
+        if(st.isEmpty())
+        {
+            st.push(top);
+        }
+        else
+        {
+            int temp=st.pop();
+            insert(st,top);
+            st.push(temp);
+        }
+    }
+    static void reverse(Stack<Integer> st) {
+        if(!st.isEmpty())
+        {
+            int top=st.pop();
+            reverse(st);
+            insert(st,top);
+        }
+        
+    }
+}
