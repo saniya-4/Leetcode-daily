@@ -1,0 +1,14 @@
+// User function Template for Java
+
+class Solution {
+    static int toggleBits(int n, int l, int r) {
+       int count=r-l+1;
+       int val=l;
+       for(int i=0;i<count;i++)
+       {
+           n=(n ^ (1<<val-1));
+           val=val+1;
+       }
+       return  n;
+    }
+}; 
