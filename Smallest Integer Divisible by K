@@ -1,0 +1,14 @@
+class Solution {
+    public int smallestRepunitDivByK(int k) {
+        int rem=0;
+        for(int len_n=1;len_n<=k;len_n++)
+        {
+            rem=(rem*10+1)%k;
+            if(rem==0)
+            {
+                return len_n;
+            }
+        }
+        return -1;
+    }
+}
