@@ -1,0 +1,58 @@
+class Pair{
+    long dis;
+    int node;
+    Pair(long dis,int node)
+    {
+        this.dis=dis;
+        this.node=node;
+    }
+}
+class Solution {
+    public int countPaths(int n, int[][] roads) {
+        int mod=(int)(1e9+7);
+        List<List<Pair>>adj=new ArrayList<>();
+        PriorityQueue<Pair>pq=new PriorityQueue<>((a,b)->Long.compare(a.dis,b.dis));
+        for(int i=0;i<n;i++)
+        {
+            adj.add(new ArrayList<>());
+        }
+        for(int []r:roads)
+        {
+            int u=r[0];
+            int v=r[1];
+            int wt=r[2];
+            adj.get(u).add(new Pair(wt,v));
+            adj.get(v).add(new Pair(wt,u));
+           
+        }
+        long []dis=new long[n];
+        Arrays.fill(dis,Long.MAX_VALUE);
+        int []ways=new int[n];
+        Arrays.fill(ways,0);
+        ways[0]=1;
+        dis[0]=0;
+        pq.add(new Pair(0,0));
+        while(!pq.isEmpty())
+        {
+            Pair p=pq.poll();
+            int curNode=p.node;
+            long curDis=p.dis;
+            for(Pair ele:adj.get(curNode))
+            {
+                int nextNode=ele.node;
+                long nextDis=ele.dis;
+                if(curDis+nextDis<dis[nextNode])
+                {
+                    dis[nextNode]=curDis+nextDis;
+                    ways[nextNode]=ways[curNode];
+                    pq.add(new Pair(dis[nextNode],nextNode));
+                }
+                else if(curDis+nextDis==dis[nextNode])
+                {
+                    ways[nextNode]=(ways[nextNode]+ways[curNode])%mod;
+                }
+            }
+        }
+        return (ways[n-1])%mod;
+    }
+}
