@@ -1,0 +1,46 @@
+import java.util.*;
+public class SalesManProblem { 
+    public static int ways(int mask,int pos,int [][]dp,int [][]cost)
+    {
+        int n=cost.length;
+        if((mask ==(1<<n)-1))
+        {
+            return cost[pos][0];
+        }
+        if(dp[mask][pos]!=-1)
+       {
+        return dp[mask][pos];
+       }
+       int minc=(int)(1e9);
+       for(int k=0;k<n;k++)
+       {
+        if((mask &(1<<k))==0)
+        {
+            minc=Math.min(minc,cost[pos][k]+ways(mask | (1<<k),k,dp,cost));
+        }
+       }
+       return dp[mask][pos]=minc;
+    }
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int [][]cost=new int[n][n];
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                cost[i][j]=sc.nextInt();
+            }
+        }
+        int [][]dp=new int[1<<n][n];
+        for(int []d:dp)
+        {
+            Arrays.fill(d,-1);
+        }
+        int mask=1;
+        int pos=0;
+        System.out.println(ways(mask,pos,dp,cost));
+        
+        
+    }
+}
