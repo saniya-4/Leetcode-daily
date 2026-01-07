@@ -1,0 +1,40 @@
+import java.util.*;
+public class SalesManProblem { 
+    public static int ways(int last,int len,boolean []vis,int [][] cost)
+    {
+        if(len==cost.length)
+        {
+            return cost[last][0];
+        }
+        int minc=(int)(1e9);
+        for(int k=1;k<cost.length;k++)
+        {
+            if(vis[k]==false)
+            {
+                vis[k]=true;
+               minc=Math.min(minc,cost[last][k]+ways(k,len+1,vis,cost)); 
+                vis[k]=false;
+            }
+        }
+        
+        return minc;
+    }
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int [][]cost=new int[n][n];
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                cost[i][j]=sc.nextInt();
+            }
+        }
+        boolean []vis=new boolean[n];
+        vis[0]=true;
+        System.out.print(ways(0,1,vis,cost));
+        
+        
+    }
+}
+ 
